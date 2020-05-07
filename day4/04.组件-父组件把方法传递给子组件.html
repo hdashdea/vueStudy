@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='../lib/vue.js'></script>
+</head>
+<body>
+    <div id='app'>
+        <!-- 传递方法的时候只能用 v-on -->
+        <com1 @func="show"></com1>
+    </div>
+
+    <template id="tmp1">
+        <div>
+            <h1>这是子组件</h1>
+            <input type="button" value="按钮" @click="myClick" >
+        </div>
+    </template>
+
+    <script>
+
+        var tem2 = {
+            template: '#tmp1',
+            methods: {
+                myClick() {
+                    //console.log('ok')
+                    //如何拿到父组件给定的方法并调用这个方法
+                    // emit是触发调用的意思
+                    this.$emit('func', this.msg)
+                    //传参从第二个参数开始
+                }
+            },
+            data: function() {
+                return {
+                    msg: '子组件的信息'
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dataFromSon: null
+            },
+            methods: {
+                show(data) {
+                    this.dataFromSon = data
+                    console.log('调用了父组件的show方法', this.dataFromSon)
+                }
+            },
+            components: {
+                com1: tem2
+            }
+        })
+    </script>
+</body>
+</html>

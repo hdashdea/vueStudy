@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='../lib/vue.js'></script>
+</head>
+<body>
+    <div id='app'>
+        <!-- 父组件可以在引用子组件的时候，可以通过属性绑定传递数据-->
+        <com1 :msg="msg"></com1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '123 啊，父组件中的数据'
+            },
+            methods: {
+
+            },
+            components: {
+                com1: {
+                    // data中的数据是组件中自己私有的
+                    // data中的数据都是可读可写的
+                    data: function() {
+                        return {
+
+                        }
+                    },
+                    //子组件中默认无法访问到父组件中的data或methods
+                    //props中的数据库可以更改, 但是vue有警告, 不会推荐这么做
+                    template: '<h1 @click="change">子组件 --- {{ msg }}</h1>',
+                    //把父组件传递过来的msg属性先在props数组中定义一下，这样才能使用这个属性
+                    //props中的数据都是只读的
+                    props: ['msg'],
+                    methods: {
+                        change() {
+                            this.msg = '被修改了'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

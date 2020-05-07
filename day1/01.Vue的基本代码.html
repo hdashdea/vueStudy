@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="lib/vue.js"></script>
+<body>
+    <!--vue实例控制的区域-->
+    <div id="app">
+        <!-- 插值表达式 -->
+        <p> {{ msg }}</p>
+        <p>{{ 1 + 2 }}</p>
+    </div>
+    <script>
+        /*
+        vue的基本使用步骤
+            1. 需要提供标签用于填充数据
+            2. 引入vue.js库文件
+            3. 可以使用vue的语法做功能了
+            4. 把vue提供的数据填充到标签里面
+         */
+        const vm = new Vue({
+            el:'#app',
+            data: {//data属性，存放的是el中将要用到的数据
+                msg: '这是第一个Vue界面'//通过Vue提供的指令，很方便地就能把数据渲染到页面上，程序员不在手动操作
+            }
+        })
+    </script>
+    
+</body>
+</html>

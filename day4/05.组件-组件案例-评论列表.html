@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='../lib/vue.js'></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+    <div id='app'>
+
+        <cmt-box @func="getCommentsFromLocalStorage"></cmt-box>
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">评论人: {{ item.user }}</span>
+                {{ item.content }}
+            </li>
+        </ul>
+        
+
+    </div>
+
+    <template id="tmp1">
+        <div>
+            <div class="form-group">
+                <label>评论人: </label>
+                <input type="text" class="form-control" v-model="user">
+            </div>
+
+            <div class="form-group">
+                <label>内容: </label>
+                <textarea class="form-control" v-model="content"></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="发布评论" class="btn btn-primary" @click="postComment">
+            </div>
+        </div>
+    </template>
+
+    <script>
+
+        var commentBox = {
+            template: '#tmp1',
+            data: function() {
+                return {
+                    user: '',
+                    content: ''
+                }
+            },
+            methods: {
+                postComment() {
+                    // 1. 评论数据存到那里去 存放到了localStorage
+                    // 2. 先组织处一个最新的评论数据对象
+                    // 3. 先想办法把第二步的评论对象保存到localStorage
+                    // localStorage只支持字符串保存, 先序列化 JSON.stringify()
+
+                    var comments = window.localStorage.getItem('comments') || '[]'
+                    comments = JSON.parse(comments)
+                    comments.unshift({ id: Date.now(), user: this.user, content: this.content})
+                    window.localStorage.setItem('comments', JSON.stringify(comments))
+
+                    this.user = this.content = ''
+
+                    this.$emit('func')
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                user: '',
+                content: '',
+                list:[
+                    { id: Date.now(), user: '李白', content: '天生我材必有用, 千金散尽还复来'},
+                    { id: Date.now(), user: '杜甫', content: '吾庐独破受冻死亦足'},
+                    { id: Date.now(), user: '李清照', content: '试试'},
+                    { id: Date.now(), user: '小马', content: '芜湖~起飞~'}
+                ]
+            },
+            methods: {
+                //从localStorage中获取评论数据
+                getCommentsFromLocalStorage() {
+                    var comments = window.localStorage.getItem('comments') || '[]'
+                    comments = JSON.parse(comments)
+                    this.list = comments
+                }
+            },
+            components: {
+                'cmt-box': commentBox
+            },
+            beforeCreate: function() {},
+            created: function() {
+                this.getCommentsFromLocalStorage()
+            },
+            beforeMount: function() {},
+            mounted: function() {},
+            beforeUpdate: function() {},
+            updated: function() {}
+        })
+    </script>
+</body>
+</html>

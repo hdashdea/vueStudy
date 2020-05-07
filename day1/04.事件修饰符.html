@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .inner{
+            height: 150px;
+            background-color: darkcyan;
+        }
+
+        .outer{
+            padding: 40px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div class="inner" @click="div1Handler"> -->
+            <!-- .stop 是阻止了冒泡-->
+            <!-- <input type="button" @click.stop="btnHandler" value="戳他">
+        </div> -->
+
+        <!-- 使用 .prevent 阻止标签默认事件-->
+        <!-- <a href="http://www.baidu.com" @click.prevent="linkClick" >有问题去百度</a> -->
+
+        <!-- 使用 .capture 实现捕获触发事件的机制-->
+        <!-- <div class="inner" @click.capture="div1Handler">
+            <input type="button" @click.stop="btnHandler" value="戳他">
+        </div> -->
+
+        <!--使用 .self 实现只有点击当前元素才会触发事件处理函数 -->
+        <!-- <div class="inner" @click.self="div1Handler">
+            <input type="button" @click="btnHandler" value="戳他">
+        </div> -->
+
+        <!--使用 .once 只触发一次事件处理函数-->
+        <!-- <a href="http://www.baidu.com" @click.prevent.once="linkClick" >有问题去百度</a> -->
+
+        <!--演示 .stop 和 .self 的区别-->
+        <!-- .self 只会阻止自己身上的冒泡行为的触发, 并不会真正阻止冒泡行为-->
+        <div class="outer" @click="div2Handler">
+            <div class="inner" @click.self="div1Handler">
+                <input type="button" @click="btnHandler" value="戳他">
+            </div>
+        </div>
+        
+
+    </div>
+    
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                div1Handler() {
+                    console.log('这是触发了 inner div 的点击事件')
+                },
+                btnHandler() {
+                    console.log('这是触发了 bnt 按钮 的点击事件')
+                },
+                linkClick() {
+                    console.log('触发了链接的点击事件')
+                },
+                div2Handler() {
+                    console.log('这是触发了 outer div 的点击事件')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

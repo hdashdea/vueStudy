@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='../lib/vue.js'></script>
+</head>
+<body>
+    <div id='app'>
+        <h3 id="h3">{{ msg }}</h3>
+        <input v-model="msg" type="text" >
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'ok'
+            },
+            methods: {
+                show() {
+                    console.log('执行了show方法')
+                }
+            },
+            //这是我们遇见的第一个生命周期函数, 表示实力完全被创建出来之前, 会执行他
+            beforeCreate() {
+                //注意：在beforecreate生命周期函数执行的时候, data 和 methods都未被初始化
+                //console.log(this.msg)
+                //this.show()
+            },
+            //这是遇到的第二个生命周期函数
+            created() {
+                //在created中, data 和 methods 都已经被初始化好了
+                //所以data 和 methods 相关的访问最早要等到这个函数
+                console.log(this.msg)
+                this.show()
+            },
+            //这是我们遇到的第三个生命周期函数, 表示模板已经在内存中编译好了, 但是未渲染到页面中
+            beforeMount() {
+                var h3 = document.getElementById('h3')
+                //此时输出{{ msg }},说明输出的是模板
+                console.log(h3.innerText)
+            },
+            //这是我们遇到的第四个生命周期函数, 表示内存中的模板已经挂载到页面中去了, 用户已经可以看到渲染好的页面了
+            //mounted是实例创建的最后一个生命周期函数, 当执行完mounted就表示, 实例已经完全被创建好了, 此时如果没有操作的话，这个实例就躺在我们的内存中, 一动不动
+            mounted() {
+                var h3 = document.getElementById('h3')
+                //此时输出ok,说明输出的是渲染好的页面
+                console.log(h3.innerText)
+            },
+            //接下来是运行中的两个事件
+            //这个时候表示数据已经更新但是页面还没更新
+            beforeUpdate() {
+                console.log(this.msg)
+                var h3 = document.getElementById('h3')
+                console.log('更新前', h3.innerText)
+            },
+            //这个时候表示数据改变后的dom更新已经执行完毕
+            updated() {
+                var h3 = document.getElementById('h3')
+                console.log('更新后', h3.innerText)
+            }
+        })
+    </script>
+</body>
+</html>

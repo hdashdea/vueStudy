@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='../lib/vue.js'></script>
+</head>
+<body>
+    <div id='app'>
+
+        <login ref="myLogin"></login>
+
+        <input type="button" value="获取元素" @click="getElement" ref="myBtn">
+
+        <h3 ref="myH3">哈哈哈</h3>
+    </div>
+    <script>
+
+        var login = {
+            template: '<h1>登陆组件</h1>',
+            methods: {
+                show() {
+                    console.log('触发了子组件的方法')
+                }
+            },
+            data: function() {
+                return {
+                    msg: 'zs'
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            methods: {
+                getElement() {
+                    //ref s是指英文单词 reference 就是引用的意思
+                    console.log(this.$refs.myH3.innerText)
+                    console.log(this.$refs.myBtn.value)
+                    console.log(this.$refs.myLogin.show())
+                }
+            },
+            components: {
+                login
+            }
+        })
+    </script>
+</body>
+</html>

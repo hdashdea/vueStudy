@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <h4>{{ msg }}</h4>
+        <!-- v-bind只能实现数据的单向绑定, 从 M 自动绑定到 V-->
+        <input type="text" :value="msg" style="width: 100%;">
+        <!--使用 v-model 指令, 可以实现表单元素和Module中数据的双向数据绑定-->
+        <!-- 注意：v-model 只能运用在 表单元素中-->
+        <!-- input(radio, text, address, email...) select checkbox textarea-->
+        <input type="text" v-model="msg" style="width: 100%;">
+
+        
+    </div>
+    
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '酒瓯爱的建安大菊花杜鹃湖付伙食费'
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+</html>

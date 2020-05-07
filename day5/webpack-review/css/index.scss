@@ -1,0 +1,17 @@
+html,body {
+    .box {
+        //默认请款下, webpack 无法处理css中url地址, 无论是字体库还是图片
+        background: url('../images/test.jpg');
+        background-size: cover;
+        height: 200px;
+        width: 500px;
+    }
+
+    .box2 {
+        //默认请款下, webpack 无法处理css中url地址, 无论是字体库还是图片
+        background: url('../images copy/test.jpg');
+        background-size: cover;
+        height: 200px;
+        width: 500px;
+    }
+}

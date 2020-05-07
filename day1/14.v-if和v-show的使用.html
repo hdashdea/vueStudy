@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='lib/vue.js'></script>
+</head>
+<body>
+    <div id='app'>
+
+        <!-- <input type="button" value="黑化" @click="toggle"> -->
+        <input type="button" value="黑化" @click="flag=!flag">
+
+        <!-- v-if 的特点是每次都会删除或创建元素-->
+        <!--v-if 有较高的切换性能消耗-->
+        <!--如果元素涉及到频繁的切换，最好不要用v-if-->
+        <h1 v-if="flag">这是用 v-if 控制的元素</h1>
+        <!-- v-show 每次不会进行 DOM 的删除操作, 只是切换了元素的 display: none 的样式-->
+        <!-- v-show 有较高的初始切换消耗-->
+        <!--如果一个元素从来没有显示过, 最好不要用 v-show -->
+        <h1 v-show="flag">这是用 v-show 控制的元素</h1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true
+            },
+            methods: {
+                toggle() {
+                    this.flag = !this.flag
+                }
+            }
+        })
+    </script>
+</body>
+</html>

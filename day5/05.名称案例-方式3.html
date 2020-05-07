@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script src='../lib/vue.js'></script>
+</head>
+<body>
+    <div id='app'>
+
+        <input type="text" v-model="firstName" > +
+        <input type="text" v-model="lastName" > =
+        <input type="text" v-model="fullName">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: '',
+                lastName: ''
+            },
+            methods: {
+                
+            },
+            //在这个属性中可以定义一些属性, 这些属性可以计算, 本质就是一个方法, 只不过我们在使用这些计算属性方法的时候, 是直接把他们的名称当做属性使用, 而不是当作方法调用
+            computed: {
+                // 就是把方法当做属性用, 属性怎么用这个方法怎么用
+                // 只要这个方法中的任何data中的属性值发生了变化, 这个方法会立即调用
+                // 计算属性的求值结果会被缓存起来, 方便下次直接调用, 如果内部使用的属性没有变化, 下次调用会直接去取值, 而不是调用方法再算一次
+                fullName: function() {
+                    return this.firstName + '-' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+</html>
