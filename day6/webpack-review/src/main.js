@@ -39,3 +39,9 @@ var vm = new Vue({
         return createElements(login)
     }
 })
+
+
+import m1, {title, xxx as sss} from './test.js'
+
+console.log(m1)
+console.log(title, sss)
