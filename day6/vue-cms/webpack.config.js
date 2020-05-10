@@ -20,7 +20,7 @@ module.exports = {
             { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
             // 处理图片路径的loader
             // limit 当给定的值等于或大于图片的的大小才进行Base64转码
-            { test: /\.jpg|\.gif|\.png|\.bpm$/, use: 'url-loader?limit=7632&name=[name]-[hash:8].[ext]'},
+            { test: /\.(jpg|gif|png|bpm)$/, use: 'url-loader?limit=7632&name=[name]-[hash:8].[ext]&esModule=false'},
             // 处理字体
             { test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader'},
             // 排除模块中的js, 人家早就转换好了, 并且打包时间慢, 打包完也没法用
