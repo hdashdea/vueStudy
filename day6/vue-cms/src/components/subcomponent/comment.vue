@@ -2,9 +2,9 @@
     <div class="cmt-container">
         <h3>发表评论</h3>
         <hr>
-        <textarea placeholder="请输入要评论的内容(最多吐槽120字)" maxlength="120"></textarea>
+        <textarea placeholder="请输入要评论的内容(最多吐槽120字)" maxlength="120" v-model="myComment"></textarea>
 
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <mt-button type="primary" size="large" @click="commitCmt">发表评论</mt-button>
 
         <div class="cmt-list">
             <div class="cmt-item" v-for="(item, i) in comments" :key="i">
@@ -24,13 +24,15 @@
 <script>
 
 import { Toast } from 'mint-ui'
+import moment from 'moment'
 
 export default {
     props: ['id'],
     data() {
         return {
             comments: [],
-            pageIndex: 1
+            pageIndex: 1,
+            myComment: ''
         }
     },
     methods: {
@@ -47,6 +49,26 @@ export default {
         getMore() {
             this.pageIndex++
             this.getComments()
+        },
+        commitCmt() {
+
+            if(this.myComment.trim() === '') {
+                Toast('请添加评论内容')
+                return
+            }
+
+            // 参数一：url
+            // 参数二：数据对象
+            // 参数三：传递参数时数据格式 application/x-www-form-urlencoded
+            this.$http.post('api/postcomment/' + this.id, {content: this.myComment}).then(result => {
+                if(result.body.status === 0) {
+                    var tempCmt = { add_time: moment().format('YYYY-MM-DD HH:mm:ss'), content: this.myComment.trim(), user_name: '匿名用户'}
+                    this.comments.unshift(tempCmt)
+                    this.myComment = ''
+                }else {
+                    Toast('发布评论失败')
+                }
+            })
         }
     },
     created() {
